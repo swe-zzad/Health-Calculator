@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/dcf8acdc-9dc5-4b0c-b16d-fae5347646ab/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/health-calculator-please",
+    "appService.deploySubpath": "."
+}
