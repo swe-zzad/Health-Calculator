@@ -1,17 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="styles.css">
-  <title>Vanilla JavaScript App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Insurance Risk Calculator</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-
 <body>
-  <main>
-    <h1>Vanilla JavaScript App</h1>
-  </main>
-</body>
+    <div class="container">
+        <h2>Health Insurance Risk Calculator</h2>
+        <form id="riskForm">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age" required>
 
+            <label for="bmi">BMI:</label>
+            <input type="number" id="bmi" name="bmi" step="0.1" required>
+
+            <label for="bp">Blood Pressure:</label>
+            <input type="text" id="bp" name="bp" required>
+
+            <label for="history">Family Disease History:</label>
+            <input type="text" id="history" name="history" required>
+
+            <button onclick="rollDice()" type="submit">Calculate Risk</button>
+        </form>
+        <p id="result"></p>
+    </div>
+
+    <script>
+      function rollDice() {
+        const age = document.getElementById("age").value;
+        const bmi = document.getElementById("bmi").value;
+        const bp = document.getElementById("bp").value;
+        const history = document.getElementById("history").value;
+
+        const requestData = {
+            age: age,
+            bmi: bmi,
+            bloodPressure: bp,
+            familyHistory: history
+        };
+
+        fetch("/calculate-risk", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(requestData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById("result").textContent = "Risk Level: " + data.riskLevel;
+        })
+        .catch(error => {
+            console.error("Error:", error);
+            document.getElementById("result").textContent = "Error calculating risk.";
+        });
+      }
+    </script>
+</body>
 </html>
