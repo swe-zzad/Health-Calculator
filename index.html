@@ -120,7 +120,13 @@
             });
             const data = await response.json();
             document.getElementById('result').textContent = 'Risk Category: ' + data.riskCategory;
+
         });
+
+        (async function() {
+        const { text } = await( await fetch(`/api/message`)).json();
+        document.querySelector('#name').textContent = text;
+    }());
     </script>
 </body>
 </html>
